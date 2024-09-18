@@ -1,0 +1,70 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manager-role
+rules:
+  - apiGroups:
+      - apps.siming.com
+    resources:
+      - mysqls
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps.siming.com
+    resources:
+      - mysqls/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - apps.siming.com
+    resources:
+      - mysqls/status
+    verbs:
+      - get
+      - patch
+      - update
+
+  # 添加对 Deployment 资源的权限
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+
+  # Deployment 状态的权限
+  - apiGroups:
+      - apps
+    resources:
+      - deployments/status
+    verbs:
+      - get
+      - patch
+      - update
+
+  # 添加对 Secret 资源的权限
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
